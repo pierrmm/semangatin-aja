@@ -1,37 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Komponen QuoteDisplay
 
-## Getting Started
+## Tujuan dan Gambaran Umum
 
-First, run the development server:
+Komponen QuoteDisplay adalah fitur utama dari aplikasi Semangat, dirancang untuk menampilkan kutipan motivasi dengan antarmuka pengguna yang menarik dan interaktif. Komponen ini berfungsi sebagai elemen utama yang menghadap pengguna untuk menyampaikan konten inspirasional dengan animasi dan efek visual yang menarik.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Fungsi Utama
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. **Tampilan Kutipan**: Menampilkan kutipan motivasi beserta penulisnya dalam format kartu yang estetis dan menarik.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+2. **Latar Belakang Dinamis**: Menampilkan latar belakang gradien yang berubah warna setiap kali kutipan baru ditampilkan untuk menciptakan variasi visual dan mempertahankan keterlibatan pengguna.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. **Penghitung Motivasi**: Melacak dan menampilkan jumlah berapa kali pengguna telah menerima motivasi melalui aplikasi, menciptakan rasa komunitas dan dampak positif.
 
-## Learn More
+4. **Elemen Interaktif**: Menyertakan tombol "Quote Baru" yang memungkinkan pengguna untuk meminta kutipan motivasi baru kapan saja.
 
-To learn more about Next.js, take a look at the following resources:
+5. **Animasi Loading**: Menampilkan animasi loading yang menarik dengan persentase kemajuan saat mengambil kutipan baru.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+6. **Efek Confetti**: Memicu animasi confetti sebagai perayaan ketika kutipan baru ditampilkan, meningkatkan dampak emosional positif.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+7. **Penanganan Kesalahan**: Menangani situasi di mana kutipan tidak tersedia dengan anggun, memberikan umpan balik yang jelas kepada pengguna.
 
-## Deploy on Vercel
+## Implementasi Teknis
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Manajemen State
+- Menggunakan React hooks (useState, useEffect, useCallback, useMemo) untuk manajemen state yang efisien
+- Mempertahankan state untuk konten kutipan, animasi, status loading, dan elemen visual
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# semangatin-aja
+### Efek Visual
+- Mengimplementasikan animasi CSS kustom untuk elemen mengambang, efek pulse, dan rotasi
+- Menggunakan filter backdrop dan gradien untuk estetika desain glass-morphism yang modern
+- Menampilkan emoji dinamis yang berubah dengan setiap kutipan
+
+### Optimasi Kinerja
+- Memanfaatkan useMemo untuk array statis untuk mencegah render ulang yang tidak perlu
+- Mengimplementasikan useCallback untuk fungsi-fungsi guna mengoptimalkan kinerja dalam struktur komponen React
+- Mensimulasikan kemajuan loading dengan interval terkontrol untuk pengalaman pengguna yang lebih mulus
+
+### Desain Responsif
+- Beradaptasi dengan berbagai ukuran layar dengan tata letak dan tipografi yang responsif
+- Mempertahankan daya tarik visual di perangkat desktop dan mobile
+
+## Poin Integrasi
+
+Komponen ini terintegrasi dengan:
+- Database kutipan melalui prop quotes yang disediakan
+- Sistem penghitung motivasi melalui fungsi updateMotivationCount
+- Library confetti untuk efek perayaan
+
+## Penggunaan
+
+```tsx
+import QuoteDisplay from '../components/QuoteDisplay';
+import { Quote } from '../types';
+
+// Contoh penggunaan dalam komponen induk
+function App() {
+  const [quotes, setQuotes] = useState<Quote[]>([]);
+  const [motivationCount, setMotivationCount] = useState(0);
+  
+  // Ambil kutipan dan jumlah motivasi...
+  
+  return (
+    <QuoteDisplay 
+      quotes={quotes}
+      motivationCount={motivationCount}
+      setMotivationCount={setMotivationCount}
+    />
+  );
+}
